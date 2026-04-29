@@ -63,7 +63,7 @@ const ManageStaff = () => {
                 enabled: true
             };
 
-            await api.delete(`/api/users/${id}`);
+            await api.post('/api/admin/create-vet-staff', payload);
 
             toast.success(`${formData.role} created successfully!`);
             setShowModal(false);
