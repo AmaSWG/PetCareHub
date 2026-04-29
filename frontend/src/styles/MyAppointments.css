@@ -1,0 +1,412 @@
+@import './variables.css';
+
+.my-appointments-page {
+   min-height: 100vh;
+   background: var(--color-white);
+ }
+
+ .my-appointments-content {
+   margin-left: 290px;
+   min-height: 100vh;
+   padding: 32px 36px;
+   box-sizing: border-box;
+ }
+
+ .appointments-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 24px;
+ }
+
+ .appointments-header h1 {
+   margin: 0;
+   font-size: 40px;
+   font-weight: 700;
+   color: #0a235a;
+ }
+
+ .search-wrapper {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 24px;
+ }
+
+ .search-bar {
+   width: 100%;
+   max-width: 760px;
+   padding: 14px 16px;
+   border: 1px solid #d1dce8;
+   border-radius: 12px;
+   font-size: 15px;
+   background: var(--color-white);
+   outline: none;
+ }
+
+ .latest-appointment-card {
+   background: var(--color-white);
+   border: 1px solid #cfe8f5;
+   border-radius: 18px;
+   padding: 22px;
+   margin-bottom: 28px;
+ }
+
+ .latest-badge {
+   display: inline-block;
+   background: var(--color-accent);
+   color: white;
+   font-size: 13px;
+   font-weight: 700;
+   padding: 8px 14px;
+   border-radius: 999px;
+   margin-bottom: 14px;
+ }
+
+ .latest-details p {
+   margin: 8px 0;
+   color: #233142;
+ }
+
+ .appointments-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 24px;
+ }
+
+ .appointment-section {
+   background: var(--color-white);
+   border-radius: 18px;
+   padding: 22px;
+   border: 1px solid #ddeaf3;
+ }
+
+ .appointment-section h2 {
+   margin: 0 0 18px 0;
+   color: #0a235a;
+   font-size: 30px;
+   font-weight: 700;
+ }
+
+ .appointment-box {
+   border: 1px solid #dbe5ee;
+   border-radius: 14px;
+   padding: 18px;
+   margin-bottom: 18px;
+   background: var(--color-white);
+ }
+
+ .appointment-box.clickable {
+   cursor: pointer;
+   transition: all 0.3s ease;
+   border-color: #2dd4bf;
+   box-shadow: 0 2px 8px rgba(45, 212, 191, 0.1);
+ }
+
+ .appointment-box.clickable:hover {
+   border-color: #1da99f;
+   box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
+   transform: translateY(-2px);
+ }
+
+ .appointment-box p {
+   margin: 8px 0;
+   font-size: 15px;
+   color: #22313f;
+ }
+
+ .empty-text {
+   color: #6b7a89;
+   font-size: 15px;
+   margin-top: 20px;
+ }
+
+ .modal-overlay {
+   position: fixed;
+   inset: 0;
+   background: rgba(10, 15, 36, 0.4);
+   backdrop-filter: blur(6px);
+   z-index: 300;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+    /* Modal styles moved to global index.css */
+}
+
+ @media (max-width: 1100px) {
+   .my-appointments-content {
+     margin-left: 0;
+     padding: 20px;
+   }
+
+   .appointments-grid,
+   .form-row {
+     grid-template-columns: 1fr;
+   }
+
+   .appointments-header {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 14px;
+   }
+ }
+
+ .updated-tag {
+   display: inline-block;
+   margin-left: 10px;
+   padding: 4px 10px;
+   border-radius: 999px;
+   background: var(--color-accent);
+   color: rgb(255, 255, 255);
+   font-size: 12px;
+   font-weight: 700;
+   vertical-align: middle;
+ }
+
+ /* ---- update success modal ---- */
+ .success-modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0, 0, 0, 0.5);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+   animation: fadeIn 0.2s ease-in-out;
+ }
+
+ .success-modal {
+   background: #fff;
+   padding: 32px;
+   border-radius: 16px;
+   max-width: 400px;
+   width: 90%;
+   text-align: center;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+ }
+
+ .success-modal__icon {
+   width: 60px;
+   height: 60px;
+   border-radius: 50%;
+   background: rgba(46, 204, 113, 0.15);
+   color: #2ecc71;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 30px;
+   margin: 0 auto 20px;
+ }
+
+ .success-modal__title {
+   font-size: 22px;
+   font-weight: 700;
+   color: var(--color-primary);
+   margin: 0 0 12px;
+ }
+
+ .success-modal__message {
+   color: var(--color-text-light);
+   line-height: 1.6;
+   margin: 0 0 24px;
+ }
+
+ .status-cancelled {
+   color: #c62828;
+   font-weight: 700;
+ }
+
+ .cancel-info-box {
+   margin-top: 12px;
+   padding: 12px;
+   border-radius: 10px;
+   background: #fff1f1;
+   border: 1px solid #f5bcbc;
+ }
+
+ .cancel-info-text {
+   margin: 0 0 6px 0;
+   color: #c62828;
+   font-weight: 600;
+ }
+
+ .cancel-reason {
+   margin: 0;
+   color: #22313f;
+   font-size: 14px;
+ }
+
+ .error-box {
+   margin-top: 4px;
+   padding: 10px 12px;
+   border-radius: 8px;
+   background: #ffeaea;
+   border: 1px solid #f3b5b5;
+   color: #c62828;
+   font-size: 14px;
+   font-weight: 600;
+ }
+
+/* ══════════════════════════════════════════════
+   Update Appointment Modal — 2-column layout
+══════════════════════════════════════════════ */
+.update-modal {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(10, 35, 90, 0.18);
+  width: 680px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px 36px 28px;
+  box-sizing: border-box;
+  animation: slideUpModal 0.22s ease;
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ── */
+.update-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.update-modal__title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #0a235a;
+}
+
+.update-modal__close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.update-modal__close:hover {
+  background: #f1f5f9;
+  color: #0a235a;
+}
+
+/* ── Form rows ── */
+.update-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.update-modal__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* ── Individual field ── */
+.update-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.update-modal__field--full {
+  grid-column: 1 / -1;
+}
+
+/* ── Label ── */
+.update-modal__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── Shared input / select ── */
+.update-modal__input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #dbe4ee;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  appearance: auto;
+}
+
+.update-modal__input:focus {
+  border-color: #2dd4bf;
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15);
+}
+
+/* ── Read-only fields ── */
+.update-modal__input--readonly {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: default;
+  border-color: #e8edf3;
+}
+
+.update-modal__input--readonly:focus {
+  border-color: #e8edf3;
+  box-shadow: none;
+}
+
+/* ── Notes textarea ── */
+.update-modal__textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #dbe4ee;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 90px;
+  font-family: inherit;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.update-modal__textarea:focus {
+  border-color: #2dd4bf;
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15);
+}
+
+/* ── Footer ── */
+.update-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid #f0f4f8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .update-modal {
+    padding: 24px 18px 20px;
+  }
+
+  .update-modal__row {
+    grid-template-columns: 1fr;
+  }
+}

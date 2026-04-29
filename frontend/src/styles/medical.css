@@ -1,0 +1,205 @@
+/* ── Medical Records Premium Design ──────────────────────── */
+
+.medical-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.medical-page h1 {
+    font-family: var(--font-family);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-primary-dark);
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+}
+
+.medical-page p {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+}
+
+.medical-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+.medical-block {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.block-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin: 0;
+}
+
+/* ── Treatment List ────────────────────────────────────── */
+.update-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.update-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.update-item:hover {
+    transform: translateX(4px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.update-date {
+    background: var(--color-primary-dark);
+    color: white;
+    padding: 16px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+}
+
+.update-date span {
+    font-size: 1.2rem;
+    display: block;
+}
+
+.update-date small {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.update-detail {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.update-detail strong {
+    font-size: 1.1rem;
+    color: var(--color-text);
+}
+
+.update-detail p {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.update-meta {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.card-edit-btn {
+    align-self: center;
+    margin-right: 24px;
+}
+
+/* ── Form Labels & Inputs ──────────────────────────────── */
+.premium-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.premium-form input,
+.premium-form textarea {
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-text);
+    transition: all 0.2s;
+}
+
+.premium-form input:focus,
+.premium-form textarea:focus {
+    outline: none;
+    background: white;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(20, 27, 61, 0.05);
+}
+
+/* ── Modals & Confirmations ────────────────────────────── */
+.confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 36, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.confirm-box {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow-xl);
+    animation: fadeIn 0.3s ease;
+}
+
+.confirm-box p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 24px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+}

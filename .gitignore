@@ -1,0 +1,74 @@
+# =========================
+# NODE (React Frontend)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =========================
+# JAVA (Spring Boot Backend)
+# =========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# IDEs & Editors
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Logs & Temp
+# =========================
+*.log
+logs/
+tmp/
+temp/
+
+# =========================
+# Misc
+# =========================
+*.swp
+*.swo
+*~
+
+# Runtime uploads
+uploads/
+petcarehub/uploads/
+
+# Local Spring config
+petcarehub/src/main/resources/application-local.properties

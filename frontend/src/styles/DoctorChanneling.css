@@ -1,0 +1,468 @@
+/* ---- page layout ---- */
+.doctor-channeling-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg, #f8f9fc);
+}
+
+.doctor-channeling-content {
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- card ---- */
+.view-slots-card {
+  width: 100%;
+  margin: 0;
+  background: var(--color-white, #fff);
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border, #e2e8f0);
+}
+
+/* ---- layout helpers ---- */
+.view-slots-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-white);
+}
+
+.view-slots-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.view-slots-main {
+  flex: 1;
+  padding: 24px 28px;
+  box-sizing: border-box;
+}
+
+
+
+.view-slots-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  margin: 0;
+  color: #0f1f52;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+
+
+/* ---- split layout grid ---- */
+.dc-split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.dc-left-panel,
+.dc-right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.form-row label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  border: 1px solid #dbe4ee;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  background: var(--color-white);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-row textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.slot-section {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--color-white);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+}
+
+.slot-section h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #0f1f52;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.slot-card {
+  background: var(--color-white);
+  border: 1px solid #dbe4ee;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.06);
+}
+
+.slot-time {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f1f52;
+  margin-bottom: 6px;
+}
+
+.slot-doctor {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.notes-row {
+  align-items: start;
+}
+
+.bottom-actions {
+  margin-top: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 18px;
+}
+
+.price-field {
+  flex: 1;
+}
+
+.price-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.price-field input {
+  width: 100%;
+  border: 1px solid #dbe4ee;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  background: var(--color-white);
+}
+
+/* ---- price input (read-only) ---- */
+.price-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #f5f5f5;
+  font-weight: bold;
+  color: var(--color-primary);
+  box-sizing: border-box;
+}
+
+/* ---- slot section heading & hint ---- */
+.slot-section__title {
+  font-size: 16px;
+  color: var(--color-primary);
+  margin: 0 0 8px;
+}
+
+.slot-section__hint {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 16px;
+}
+
+/* ---- time-slot buttons ---- */
+.slot-btn {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  opacity: 1;
+  width: 100%;
+}
+
+.slot-btn--selected {
+  border: 2px solid var(--color-primary);
+  background: rgba(62, 64, 149, 0.1);
+}
+
+.slot-btn--booked {
+  opacity: 0.5;
+}
+
+.slot-btn--disabled {
+  cursor: not-allowed;
+}
+
+.slot-btn__time {
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.slot-btn__doctor {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+.slot-btn__booked-label {
+  color: #d32f2f;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* ---- success modal ---- */
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.success-modal {
+  background: #fff;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.success-modal__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin: 0 auto 20px;
+}
+
+.success-modal__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--color-primary);
+  margin: 0 0 12px;
+}
+
+.success-modal__message {
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+
+
+/* ── Slot group sections (Operations / Vaccinations) ── */
+.dc-slot-group {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 18px 20px 20px;
+  margin-top: 18px;
+  background: #fff;
+}
+
+.dc-slot-group--operation {
+  border-top: 3px solid #3b5bdb;
+}
+
+.dc-slot-group--vaccination {
+  border-top: 3px solid #0ca678;
+}
+
+.dc-slot-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.dc-slot-group-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.dc-slot-group-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-primary, #0f1f52);
+  margin-bottom: 2px;
+}
+
+.dc-slot-group-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.dc-slot-group-badge {
+  margin-left: auto;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.dc-slot-group-badge--operation {
+  background: rgba(59, 91, 219, 0.09);
+  color: #3b5bdb;
+  border: 1px solid rgba(59, 91, 219, 0.2);
+}
+
+.dc-slot-group-badge--vaccination {
+  background: rgba(12, 166, 120, 0.09);
+  color: #0ca678;
+  border: 1px solid rgba(12, 166, 120, 0.2);
+}
+
+/* ── slot-grid inside groups: 1 column for vertical stacking ── */
+.dc-slot-group--operation .slot-grid {
+  grid-template-columns: 1fr;
+}
+
+.dc-slot-group--vaccination .slot-grid {
+  grid-template-columns: 1fr;
+}
+
+/* ── Slot button category colour variants ── */
+.slot-btn--operation {
+  border-color: rgba(59, 91, 219, 0.3);
+}
+
+.slot-btn--operation.slot-btn--selected {
+  border-color: #3b5bdb;
+  background: rgba(59, 91, 219, 0.08);
+}
+
+.slot-btn--vaccination {
+  border-color: rgba(12, 166, 120, 0.3);
+}
+
+.slot-btn--vaccination.slot-btn--selected {
+  border-color: #0ca678;
+  background: rgba(12, 166, 120, 0.08);
+}
+
+/* ── Slot button label row ── */
+.slot-btn__label {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 1px;
+}
+
+/* ── Inline loading / error text ── */
+.dc-slots-loading {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin: 8px 0 0;
+}
+
+.dc-slots-error {
+  color: #dc2626;
+  font-size: 0.88rem;
+  margin: 8px 0 0;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 1100px) {
+  /* Removed multi-column grid overrides to maintain vertical stack */
+}
+
+@media (max-width: 900px) {
+  .doctor-channeling-page {
+    flex-direction: column;
+  }
+
+  .view-slots-layout {
+    flex-direction: column;
+  }
+
+  .view-slots-sidebar {
+    width: 100%;
+  }
+
+  .view-slots-main {
+    padding: 18px;
+  }
+
+  .view-slots-card-header,
+  .bottom-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dc-split-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .my-appointments-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Maintained vertical stack */
+}
