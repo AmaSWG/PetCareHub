@@ -1,4 +1,4 @@
-package com.petcarehub.order.dto;
+package com.petcarehub.cart.dto;
 
 import lombok.*;
 

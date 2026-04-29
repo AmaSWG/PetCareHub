@@ -327,7 +327,7 @@ const DoctorPetDetail = ({ pet, onClose }) => {
                             onClick={() => navigate('/dashboard/pet-medical-record', { state: { pet } })}
                             style={{ width: '100%', marginTop: '16px', padding: '12px' }}
                         >
-                            📊 Access Comprehensive Medical Vault
+                            📊 Access Comprehensive Medical Records
                         </button>
                     </div>
 

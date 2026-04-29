@@ -3,22 +3,19 @@ package com.petcarehub.user.controller;
 import com.petcarehub.product.repository.ProductRepository;
 import com.petcarehub.cart.repository.OrderRepository;
 import com.petcarehub.user.dto.UserResponse;
+import com.petcarehub.user.dto.StaffCreateRequest;
 import com.petcarehub.user.entity.Role;
 import com.petcarehub.user.entity.User;
 import com.petcarehub.user.repository.UserRepository;
 import com.petcarehub.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/admin/users")
@@ -34,23 +31,23 @@ public class AdminController {
     // Create a new staff or vet (Admin only)
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> createStaffMember(@RequestBody Map<String, Object> request) {
-        log.info("[AdminController] Received request to create staff member: {}", request.get("email"));
+    public ResponseEntity<UserResponse> createStaffMember(@RequestBody StaffCreateRequest request) {
+        log.info("[AdminController] Received request to create staff member: {}", request.getEmail());
         
         try {
             User user = User.builder()
-                    .firstName((String) request.get("firstName"))
-                    .lastName((String) request.get("lastName"))
-                    .email((String) request.get("email"))
-                    .password((String) request.get("password"))
-                    .mobileNumber((String) request.get("mobileNumber"))
-                    .address((String) request.get("address"))
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .email(request.getEmail())
+                    .password(request.getPassword())
+                    .mobileNumber(request.getMobileNumber())
+                    .address(request.getAddress())
                     .enabled(true)
                     .build();
 
             // Handle roles
             Set<Role> roles = new HashSet<>();
-            List<String> rolesList = (List<String>) request.get("roles");
+            List<String> rolesList = request.getRoles();
             if (rolesList != null) {
                 for (String r : rolesList) {
                     try {
@@ -67,7 +64,7 @@ public class AdminController {
             log.info("Successfully created staff member: {}", createdUser.getEmail());
             return ResponseEntity.ok(createdUser);
         } catch (Exception e) {
-            log.error("Failed to create staff member: {}", e.getMessage());
+            log.error("Failed to create staff member: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to create user: " + e.getMessage());
         }
     }

@@ -29,6 +29,10 @@ public class OrderManagementService {
         return orderRepository.findByUser_UserIdOrderByCreatedAtDesc(userId);
     }
 
+    public List<CustomerOrder> getPendingOrders() {
+        return orderRepository.findByOrderStatusOrderByCreatedAtDesc(OrderStatus.AWAITING_PAYMENT);
+    }
+
     public CustomerOrder getOrderById(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
@@ -124,5 +128,9 @@ public class OrderManagementService {
             throw new RuntimeException("No receipt found for order ID: " + orderId);
         }
         return order.getPaymentReceipt();
+    }
+
+    public boolean hasPurchasedProduct(Long userId, Long productId) {
+        return orderRepository.hasPurchasedProduct(userId, productId);
     }
 }

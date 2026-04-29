@@ -8,7 +8,7 @@ import com.petcarehub.feedback.entity.Feedback;
 import com.petcarehub.feedback.repository.FeedbackRepository;
 import com.petcarehub.user.entity.User;
 import com.petcarehub.user.repository.UserRepository;
-import com.petcarehub.order.repository.ViewOrderItemRepository;
+import com.petcarehub.cart.repository.OrderRepository;
 import com.petcarehub.product.entity.Product;
 import com.petcarehub.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class FeedbackService {
     private AppointmentRepository appointmentRepository;
 
     @Autowired
-    private ViewOrderItemRepository orderItemRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -61,7 +61,7 @@ public class FeedbackService {
             feedbackBuilder.isVerified(true); // Automatically verify appointment reviews
         } else if ("PRODUCT".equalsIgnoreCase(request.getFeedbackType()) && request.getProductId() != null) {
             // Verify purchase
-            boolean hasPurchased = orderItemRepository.hasPurchasedProduct(request.getOwnerId(),
+            boolean hasPurchased = orderRepository.hasPurchasedProduct(request.getOwnerId(),
                     request.getProductId());
             if (!hasPurchased) {
                 throw new RuntimeException("You must purchase the product before reviewing it.");

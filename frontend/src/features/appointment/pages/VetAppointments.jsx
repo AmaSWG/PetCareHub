@@ -104,7 +104,7 @@ const VetAppointments = () => {
         <header className="vet-appointments-card-header">
           <h2 className="section-title">Clinical Daily Schedule</h2>
           <div className="doc-sidebar-role-badge" style={{ margin: 0, background: 'rgba(20,27,61,0.05)', color: 'var(--color-primary-dark)', border: '1px solid rgba(20,27,61,0.1)' }}>
-            {appointments.filter(a => a.status === 'UPCOMING').length} UPCOMING
+            {appointments.filter(a => (a.status === 'UPCOMING') && (a.paymentStatus === 'PAID' || a.paid === true)).length} UPCOMING
           </div>
         </header>
 
@@ -121,7 +121,9 @@ const VetAppointments = () => {
           </div>
         ) : (
           <div className="vet-appointments-grid">
-            {appointments.map((a) => (
+            {appointments
+              .filter(a => (a.paymentStatus || "").toUpperCase() === "PAID" || a.paid === true)
+              .map((a) => (
               <div key={a.id} className="vet-appointment-item" style={a.status === 'UPCOMING' && calculateOverdue(a.date) > 0 ? { border: '2px solid #dc2626' } : {}}>
                 <h3>
                   <span>{a.petSpecies === 'Dog' ? '🐕' : a.petSpecies === 'Cat' ? '🐈' : '🐾'}</span>
