@@ -22,14 +22,15 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const res = await api.get(`/api/shop/orders/${order.orderId}`, {
+                const res = await api.get(`/api/orders/${order.orderId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setDetails(res.data.order);
-                if (res.data.cancellationReason) {
+                const data = res.data;
+                setDetails(data);
+                if (data.cancellationReason) {
                     setCancellationContext({
-                        reason: res.data.cancellationReason,
-                        by: res.data.cancelledBy
+                        reason: data.cancellationReason,
+                        by: data.cancelledBy
                     });
                 }
             } catch (err) {
@@ -43,7 +44,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
         if (details?.paymentReceiptFileName && token) {
             const fetchReceipt = async () => {
                 try {
-                    const response = await api.get(`/api/shop/orders/${details.orderId}/receipt`, {
+                    const response = await api.get(`/api/orders/${details.orderId}/receipt`, {
                         headers: { Authorization: `Bearer ${token}` },
                         responseType: 'blob'
                     });
@@ -73,7 +74,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
 
         try {
             setCancelling(true);
-            await api.put(`/api/shop/orders/${order.orderId}/cancel`, {
+            await api.put(`/api/orders/${order.orderId}/cancel`, {
                 reason: finalReason,
                 roles: user?.roles?.join(',') || '',
                 userId: user?.userId
@@ -94,7 +95,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
     const handleVerifyPayment = async () => {
         try {
             setVerifying(true);
-            await api.put(`/api/shop/orders/${order.orderId}/verify-payment`, {}, {
+            await api.put(`/api/orders/${order.orderId}/verify-payment`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             onToast?.(`Payment for ${order.orderNumber} verified!`);
@@ -158,7 +159,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {details.items?.map(it => (
+                        {details.orderItems?.map(it => (
                             <tr key={it.orderItemId}>
                                 <td style={{ fontWeight: 600 }}>{it.productName}</td>
                                 <td style={{ textAlign: 'right' }}>LKR {it.productPrice.toFixed(2)}</td>

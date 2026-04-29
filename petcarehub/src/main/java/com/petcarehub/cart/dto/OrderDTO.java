@@ -30,5 +30,7 @@ public class OrderDTO {
     private String paymentMethod;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String cancellationReason;
+    private String cancelledBy;
     private List<OrderItemDTO> orderItems;
 }

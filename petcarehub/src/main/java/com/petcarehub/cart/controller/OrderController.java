@@ -6,6 +6,9 @@ import com.petcarehub.cart.entity.CustomerOrder;
 import com.petcarehub.cart.enums.OrderStatus;
 import com.petcarehub.cart.service.OrderManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +51,24 @@ public class OrderController {
         return ResponseEntity.ok(mapToDTO(orderService.updateOrderStatus(orderId, newStatus)));
     }
 
-    @PostMapping("/{orderId}/cancel")
+    @PutMapping("/{orderId}/cancel")
     public ResponseEntity<OrderDTO> cancelOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(mapToDTO(orderService.cancelOrder(orderId, "Cancelled via management console", "ROLE_ADMIN", null)));
+    }
+
+    @PutMapping("/{orderId}/verify-payment")
+    public ResponseEntity<OrderDTO> verifyPayment(@PathVariable Long orderId) {
+        return ResponseEntity.ok(mapToDTO(orderService.verifyPayment(orderId)));
+    }
+
+    @GetMapping("/{orderId}/receipt")
+    public ResponseEntity<byte[]> getPaymentReceipt(@PathVariable Long orderId) {
+        CustomerOrder order = orderService.getOrderById(orderId);
+        byte[] receipt = orderService.getPaymentReceipt(orderId);
+        
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, order.getPaymentReceiptContentType())
+                .body(receipt);
     }
 
     @GetMapping("/check-purchase")
@@ -59,7 +77,7 @@ public class OrderController {
     }
 
     private OrderDTO mapToDTO(CustomerOrder order) {
-        return OrderDTO.builder()
+        var dto = OrderDTO.builder()
                 .orderId(order.getOrderId())
                 .orderNumber(order.getOrderNumber())
                 .userId(order.getUser() != null ? order.getUser().getUserId() : null)
@@ -86,5 +104,16 @@ public class OrderController {
                         .lineTotal(item.getLineTotal())
                         .build()).collect(Collectors.toList()))
                 .build();
+
+        // Fetch cancellation details if cancelled
+        if (order.getOrderStatus() == OrderStatus.CANCELLED) {
+            var cancellation = orderService.getOrderCancellation(order.getOrderId());
+            if (cancellation != null) {
+                dto.setCancellationReason(cancellation.getReason());
+                dto.setCancelledBy(cancellation.getCancelledBy());
+            }
+        }
+
+        return dto;
     }
 }
