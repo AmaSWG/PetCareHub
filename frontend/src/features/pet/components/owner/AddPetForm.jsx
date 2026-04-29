@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { registerPet } from '../../../../services/petService';
+import api from '../../../../api/axios';
 import '../../../../styles/AddPetForm.css';
 
 const INITIAL_FORM = {
@@ -65,7 +65,10 @@ const AddPetForm = ({ onClose, onSuccess, userId }) => {
             if (form.knownIllnesses) data.append('knownIllnesses', form.knownIllnesses.trim());
             if (image) data.append('image', image);
 
-            const response = await registerPet(data);
+            const res = await api.post('/api/pets', data, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            const response = res.data;
 
             if (response.success) {
                 setAlert({ type: 'success', message: '🎉 Pet registered successfully!' });
