@@ -30,13 +30,21 @@ public class DataInitializer implements CommandLineRunner {
     @Value("${ADMIN_PASSWORD}")
     private String aPassword;
 
+    @Value("${app.seed.products:true}")
+    private boolean seedProducts;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
 
         seedAdminUser();
 
-        seedStoreCatalog();
+        if (seedProducts) {
+            System.out.println("[DataInitializer] Seeding product catalog...");
+            seedStoreCatalog();
+        } else {
+            System.out.println("[DataInitializer] Product seeding is disabled.");
+        }
     }
 
     private void seedStoreCatalog() {

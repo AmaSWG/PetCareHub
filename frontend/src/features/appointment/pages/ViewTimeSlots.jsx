@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/ViewTimeSlots.css';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { getPetsByOwner } from '../../../services/petService';
 import { useAuth } from '../../auth/contexts/AuthContext';
 

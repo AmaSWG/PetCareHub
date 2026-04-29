@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pets")
-@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Pet Management", description = "Endpoints for registering and viewing pet profiles")
 public class PetController {
 

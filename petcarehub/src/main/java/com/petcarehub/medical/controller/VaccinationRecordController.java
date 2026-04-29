@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/medical-records")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class VaccinationRecordController {
 
     private final VaccinationRecordService vaccinationRecordService;

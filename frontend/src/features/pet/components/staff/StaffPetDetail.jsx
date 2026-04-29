@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl } from '../../../../services/petService';
 import '../../../../styles/PetDetail.css';
@@ -29,7 +29,7 @@ const StaffPetDetail = ({ pet, onClose }) => {
     const fetchAppointments = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('/api/appointments');
+            const res = await api.get('/api/appointments');
             const allAppts = Array.isArray(res.data) ? res.data : [];
             
             const petAppts = allAppts.filter(a => 

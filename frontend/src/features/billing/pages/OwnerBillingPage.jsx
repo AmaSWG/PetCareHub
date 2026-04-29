@@ -4,7 +4,7 @@ import { billingService } from '../services/billingService';
 import OwnerOrdersTable from '../components/OwnerOrdersTable';
 import OwnerAppointmentsTable from '../components/OwnerAppointmentsTable';
 import { useAuth } from '../../auth/contexts/AuthContext';
-import axios from 'axios';
+import api from '../../../api/axios';
 import '../styles/OwnerBilling.css';
 
 export default function OwnerBillingPage() {
@@ -31,7 +31,7 @@ export default function OwnerBillingPage() {
       // Fetch appointments
       let apptsData = [];
       try {
-        const res = await axios.get(`/api/appointments/user/${userId}`);
+        const res = await api.get(`/api/appointments/user/${userId}`);
         apptsData = Array.isArray(res.data) ? res.data : [];
         
         // Also fetch vaccinations if possible

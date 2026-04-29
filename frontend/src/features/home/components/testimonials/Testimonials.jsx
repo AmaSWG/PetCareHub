@@ -17,7 +17,7 @@ const Testimonials = () => {
             try {
                 const data = await getPublicFeedbacks();
                 // Cap at 10 reviews for the home page slider
-                setFeedbacks(data.slice(0, 10)); 
+                setFeedbacks(data.slice(0, 10));
             } catch (err) {
                 console.error("Failed to fetch testimonials", err);
             } finally {
@@ -55,11 +55,11 @@ const Testimonials = () => {
     if (feedbacks.length === 0) {
         return (
             <div className="testimonials empty">
-                
+
                 <p className="no-reviews-msg">No reviews yet. Be the first to share your experience!</p>
                 <div className="view-more-container">
                     <Link to="/reviews" className="view-more-link">
-                        Write a Review <ArrowForwardIcon style={{ fontSize: '18px', marginLeft: '5px' }} />
+                        See all <ArrowForwardIcon style={{ fontSize: '18px', marginLeft: '5px' }} />
                     </Link>
                 </div>
             </div>
@@ -68,8 +68,8 @@ const Testimonials = () => {
 
     return (
         <div className="testimonials">
-            
-            
+
+
             {feedbacks.length > 2 && (
                 <>
                     <ArrowBackIcon className={`prev-btn ${currentIndex === 0 ? 'disabled' : ''}`} onClick={slideBackward} />
@@ -101,10 +101,10 @@ const Testimonials = () => {
                                     <StarRating rating={review.rating} showText={true} />
                                 </div>
                                 <p className="testimonial-comment">"{review.comment}"</p>
-                                
+
                                 {review.comment && review.comment.length > 120 && (
-                                    <Link 
-                                        className="testimonial-read-more" 
+                                    <Link
+                                        className="testimonial-read-more"
                                         to={`/reviews#feedback-${review.id}`}
                                     >
                                         Read More

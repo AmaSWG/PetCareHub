@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { toast } from 'react-toastify';
 import KeyIcon from '@mui/icons-material/Key';
 import PasswordResetLayout from '../components/PasswordResetLayout';
@@ -22,7 +22,7 @@ const ForgotPasswordOtp = () => {
     if (otp.length !== 6) { setError('Please enter a 6-digit OTP'); return; }
     setIsLoading(true);
     try {
-      const response = await axios.post('/api/auth/verify-otp', { email, otp });
+      const response = await api.post('/api/auth/verify-otp', { email, otp });
       toast.success('OTP Verified!');
       navigate(`/reset?token=${response.data}`);
     } catch (err) {

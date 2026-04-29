@@ -3,7 +3,7 @@ import { useAuth } from '../../../auth/contexts/AuthContext';
 // DashboardLayout removed from here as it is handled by the parent (AdminDashboard)
 import '../../components/Dashboard.css';
 import './ManageStaff.css';
-import axios from 'axios';
+import api from '../../../../api/axios';
 import { toast } from 'react-toastify';
 
 const ManageStaff = () => {
@@ -26,9 +26,7 @@ const ManageStaff = () => {
     const fetchUsers = async () => {
         setIsFetching(true);
         try {
-            const response = await axios.get('/api/admin/users', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await api.get('/api/users/staff');
             const staffAndVets = response.data.filter(u =>
                 u.roles.includes('ROLE_VET') || u.roles.includes('ROLE_STAFF') || u.roles.includes('ROLE_ADMIN')
             );
@@ -65,9 +63,7 @@ const ManageStaff = () => {
                 enabled: true
             };
 
-            await axios.post('/api/admin/users', payload, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.delete(`/api/users/${id}`);
 
             toast.success(`${formData.role} created successfully!`);
             setShowModal(false);

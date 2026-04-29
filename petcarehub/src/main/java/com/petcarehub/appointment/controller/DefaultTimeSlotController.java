@@ -11,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/default-time-slots")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class DefaultTimeSlotController {
 
     private final DefaultTimeSlotRepository repository;

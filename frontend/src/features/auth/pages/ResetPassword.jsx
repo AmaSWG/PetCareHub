@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { toast } from 'react-toastify';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -29,7 +29,7 @@ const ResetPassword = () => {
 
         setLoading(true);
         try {
-            await axios.post('/api/auth/reset-password', { password }, { params: { token } });
+            await api.post('/api/auth/reset-password', { password }, { params: { token } });
             toast.success('Password reset successful!');
             setTimeout(() => navigate('/login'), 2000);
         } catch (err) {

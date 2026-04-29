@@ -1,5 +1,6 @@
 import React from 'react';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { getImageUrl } from '../../../api/imageUtils';
 
 const ProductCard = ({ product, onClick, onQuickAdd }) => {
   const formattedPrice = `Rs. ${product.price?.toLocaleString('en-LK') || '0.00'}`;
@@ -34,7 +35,7 @@ const ProductCard = ({ product, onClick, onQuickAdd }) => {
       <div className="product-card-img-wrap">
         {product.imageUrl ? (
           <img
-            src={product.imageUrl}
+            src={getImageUrl(product.imageUrl)}
             alt={product.name}
             className="product-card-img"
             onError={(e) => {

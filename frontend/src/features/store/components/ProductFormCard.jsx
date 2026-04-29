@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api/axios';
+import { getImageUrl } from '../../../api/imageUtils';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import './ProductForm.css';
 
@@ -38,7 +39,7 @@ const ProductFormCard = ({ product, onClose, onRefresh, onToast }) => {
                 colors: product.colors || '',
                 flavors: product.flavors || ''
             });
-            setImagePreview(`/api/products/${product.productId}/image`);
+            setImagePreview(getImageUrl(`/api/products/${product.productId}/image`));
         }
     }, [product]);
 
@@ -82,16 +83,15 @@ const ProductFormCard = ({ product, onClose, onRefresh, onToast }) => {
 
             const config = {
                 headers: { 
-                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             };
 
             if (isEdit) {
-                await axios.put(`/api/products/${product.productId}`, data, config);
+                await api.put(`/api/products/${product.productId}`, data, config);
                 onToast?.("Product updated successfully!");
             } else {
-                await axios.post('/api/products', data, config);
+                await api.post('/api/products', data, config);
                 onToast?.("Product added successfully!");
             }
 

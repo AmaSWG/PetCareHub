@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import "../../../styles/VetAppointments.css";
 
@@ -23,7 +23,7 @@ const VetAppointments = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`/api/appointments/vet/${userId}`);
+      const res = await api.get(`/api/appointments/vet/${userId}`);
       setAppointments(res.data || []);
     } catch (err) {
       console.error("Failed to load vet appointments:", err);
@@ -46,7 +46,7 @@ const VetAppointments = () => {
 
   const handleDone = async (id) => {
     try {
-      await axios.patch(`/api/appointments/${id}/complete`);
+      await api.patch(`/api/appointments/${id}/complete`);
       await fetchAppointments();
     } catch (error) {
       console.error("Failed to complete appointment:", error);
@@ -82,7 +82,7 @@ const VetAppointments = () => {
     try {
       setIsCancelling(true);
       setCancelError("");
-      await axios.patch(
+      await api.patch(
         `/api/appointments/${selectedAppointment.id}/cancel-by-vet`,
         {
           vetId: userId,

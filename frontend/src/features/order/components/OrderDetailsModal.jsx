@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import '../Order.css';
 
@@ -22,7 +22,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const res = await axios.get(`/api/shop/orders/${order.orderId}`, {
+                const res = await api.get(`/api/shop/orders/${order.orderId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setDetails(res.data.order);
@@ -43,7 +43,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
         if (details?.paymentReceiptFileName && token) {
             const fetchReceipt = async () => {
                 try {
-                    const response = await axios.get(`/api/shop/orders/${details.orderId}/receipt`, {
+                    const response = await api.get(`/api/shop/orders/${details.orderId}/receipt`, {
                         headers: { Authorization: `Bearer ${token}` },
                         responseType: 'blob'
                     });
@@ -73,7 +73,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
 
         try {
             setCancelling(true);
-            await axios.put(`/api/shop/orders/${order.orderId}/cancel`, {
+            await api.put(`/api/shop/orders/${order.orderId}/cancel`, {
                 reason: finalReason,
                 roles: user?.roles?.join(',') || '',
                 userId: user?.userId
@@ -94,7 +94,7 @@ const OrderDetailsCard = ({ order, onClose, onRefresh, role, onToast }) => {
     const handleVerifyPayment = async () => {
         try {
             setVerifying(true);
-            await axios.put(`/api/shop/orders/${order.orderId}/verify-payment`, {}, {
+            await api.put(`/api/shop/orders/${order.orderId}/verify-payment`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             onToast?.(`Payment for ${order.orderNumber} verified!`);

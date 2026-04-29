@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import api from "../../../api/axios";
 import "../../../styles/MyAppointments.css";
 import { useAuth } from "../../auth/contexts/AuthContext";
 import { getAllVets } from "../../../services/vetService";
@@ -147,7 +147,7 @@ const MyAppointments = () => {
     if (!userId) return;
     try {
       setLoading(true);
-      const res = await axios.get(`/api/appointments/user/${userId}`);
+      const res = await api.get(`/api/appointments/user/${userId}`);
       const appts = Array.isArray(res.data) ? res.data : [];
 
       // Fetch upcoming vaccinations and merge them
@@ -156,18 +156,18 @@ const MyAppointments = () => {
       const vacs = Array.isArray(vacRes) ? vacRes : (Array.isArray(vacRes?.data) ? vacRes.data : []);
 
       const mappedVacs = vacs.map(v => ({
-         id: `vac-${v.id}`,
-         pet: { name: v.petName, species: v.petSpecies, petId: v.petId },
-         petName: v.petName,
-         petSpecies: v.petSpecies,
-         appointmentType: "Vaccination: " + v.vaccinationName,
-         doctor: v.doctorName || "Staff",
-         date: v.dueDate,
-         timeSlot: "Pending",
-         status: new Date(v.dueDate) < new Date(today) ? "OVERDUE" : "UPCOMING",
-         paid: true,
-         paymentStatus: "PAID", // Vaccinations are paid at clinic
-         isVaccination: true
+        id: `vac-${v.id}`,
+        pet: { name: v.petName, species: v.petSpecies, petId: v.petId },
+        petName: v.petName,
+        petSpecies: v.petSpecies,
+        appointmentType: "Vaccination: " + v.vaccinationName,
+        doctor: v.doctorName || "Staff",
+        date: v.dueDate,
+        timeSlot: "Pending",
+        status: new Date(v.dueDate) < new Date(today) ? "OVERDUE" : "UPCOMING",
+        paid: true,
+        paymentStatus: "PAID", // Vaccinations are paid at clinic
+        isVaccination: true
       }));
 
       setAppointments([...appts, ...mappedVacs]);
@@ -201,8 +201,8 @@ const MyAppointments = () => {
 
   const upcomingAppointments = useMemo(
     () => filteredAppointments.filter((a) => {
-        const s = (a.status || "").toUpperCase();
-        return s === "UPCOMING" || s === "OVERDUE" || s === "PENDING";
+      const s = (a.status || "").toUpperCase();
+      return s === "UPCOMING" || s === "OVERDUE" || s === "PENDING";
     }),
     [filteredAppointments]
   );
@@ -352,7 +352,7 @@ const MyAppointments = () => {
     setShowFeedbackForm(false);
     setAppointmentForFeedback(null);
     setShowFeedbackSuccess(true);
-    
+
     // Refresh feedback status
     setTimeout(() => {
       openAppointmentDetails(selectedAppointment);
@@ -422,9 +422,9 @@ const MyAppointments = () => {
                 pastAppointments.map((appt) => {
                   const status = (appt.status || "").toUpperCase();
                   const isCompleted = status === "COMPLETED";
-                  
+
                   return (
-                    <div 
+                    <div
                       key={appt.id}
                       className={`appointment-box ${isCompleted ? 'clickable' : ''}`}
                       onClick={() => isCompleted && openAppointmentDetails(appt)}

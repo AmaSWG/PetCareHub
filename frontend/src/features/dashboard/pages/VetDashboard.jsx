@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import DashboardLayout from '../components/DashboardLayout';
 import DoctorAllPets from '../../pet/components/doctor/DoctorAllPets';

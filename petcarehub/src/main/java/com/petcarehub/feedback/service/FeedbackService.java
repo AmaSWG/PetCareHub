@@ -61,7 +61,8 @@ public class FeedbackService {
             feedbackBuilder.isVerified(true); // Automatically verify appointment reviews
         } else if ("PRODUCT".equalsIgnoreCase(request.getFeedbackType()) && request.getProductId() != null) {
             // Verify purchase
-            boolean hasPurchased = orderItemRepository.hasPurchasedProduct(request.getOwnerId(), request.getProductId());
+            boolean hasPurchased = orderItemRepository.hasPurchasedProduct(request.getOwnerId(),
+                    request.getProductId());
             if (!hasPurchased) {
                 throw new RuntimeException("You must purchase the product before reviewing it.");
             }
@@ -85,7 +86,8 @@ public class FeedbackService {
     public List<FeedbackResponse> getPublicFeedbacks() {
         return feedbackRepository.findAllByOrderByCreatedDateDesc()
                 .stream()
-                .filter(f -> !"PRODUCT".equalsIgnoreCase(f.getFeedbackType())) // Don't show product store reviews in public testimonials
+                .filter(f -> !"PRODUCT".equalsIgnoreCase(f.getFeedbackType())) // Don't show product store reviews in
+                                                                               // public testimonials
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
@@ -125,7 +127,7 @@ public class FeedbackService {
         response.setComment(feedback.getComment());
         response.setOwnerId(feedback.getOwner().getUserId());
         response.setOwnerName(feedback.getOwner().getFirstName() + " " + feedback.getOwner().getLastName());
-        
+
         Appointment appointment = feedback.getAppointment();
         if (appointment != null) {
             response.setAppointmentId(appointment.getId());
@@ -133,7 +135,7 @@ public class FeedbackService {
             response.setAppointmentDoctor(appointment.getDoctor());
             response.setAppointmentDate(appointment.getDate() + " " + appointment.getTimeSlot());
         }
-        
+
         response.setCreatedDate(feedback.getCreatedDate());
         response.setStaffReply(feedback.getStaffReply());
         response.setIsVerified(feedback.getIsVerified());

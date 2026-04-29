@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import OrderDetailsCard from '../components/OrderDetailsModal';
 import '../Order.css';
@@ -15,10 +15,8 @@ const OwnerOrdersPage = () => {
         if (!userId) return;
         try {
             setLoading(true);
-            const res = await axios.get(`/api/shop/orders/user/${userId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setOrders(res.data || []);
+            const response = await api.get('/api/orders/my-orders');
+            setOrders(response.data || []);
         } catch (error) {
             console.error("Error fetching orders:", error);
         } finally {

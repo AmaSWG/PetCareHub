@@ -2,10 +2,14 @@ package com.petcarehub.payment.service;
 
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StripeService {
+
+    @Value("${app.frontend.url:http://localhost:3000}")
+    private String frontendUrl;
 
     public String[] createCheckoutSession(Long referenceId, String referenceType, Double amount) {
         try {
@@ -13,8 +17,8 @@ public class StripeService {
 
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
-                    .setSuccessUrl("http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}&type=" + referenceType)
-                    .setCancelUrl("http://localhost:3000/payment-cancel?refId=" + referenceId + "&type=" + referenceType)
+                    .setSuccessUrl(frontendUrl + "/payment-success?session_id={CHECKOUT_SESSION_ID}&type=" + referenceType)
+                    .setCancelUrl(frontendUrl + "/payment-cancel?refId=" + referenceId + "&type=" + referenceType)
                     .putMetadata("referenceId", String.valueOf(referenceId))
                     .putMetadata("referenceType", referenceType)
                     .addLineItem(

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '../../../services/petService';
+import api from '../../../api/axios';
 import '../../../styles/StaffAllAppointments.css';
 
 const StaffAllAppointments = () => {
@@ -18,7 +17,7 @@ const StaffAllAppointments = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get(`${API_BASE_URL}/api/appointments`);
+      const response = await api.get(`/api/appointments`);
       const data = response.data?.data || response.data || [];
       setAppointments(Array.isArray(data) ? data : []);
     } catch (err) {

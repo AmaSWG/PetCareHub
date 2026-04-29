@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../../auth/contexts/AuthContext';
-import axios from 'axios';
+import api from '../../../../api/axios';
 import { toast } from 'react-toastify';
+import { getImageUrl } from '../../../../api/imageUtils';
 import './MyProfile.css';
 
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -25,9 +26,7 @@ const MyProfile = () => {
     const fetchProfile = async () => {
         if (!token) return;
         try {
-            const response = await axios.get('/api/auth/me', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await api.get('/api/auth/me');
             const data = response.data;
 
             let pfp = data.profilePicture;
@@ -66,16 +65,15 @@ const MyProfile = () => {
         uploadData.append('file', file);
 
         try {
-            await axios.post('/api/users/me/profile-picture', uploadData, {
+            await api.post('/api/users/me/profile-picture', uploadData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'multipart/form-data'
                 }
             });
             toast.success("Profile picture updated!");
             await fetchProfile();
 
-            const newResponse = await axios.get('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+            const newResponse = await api.get('/api/auth/me');
             let newPfp = newResponse.data.profilePicture;
             if (newPfp && !newPfp.startsWith('data:image')) newPfp = `data:image/jpeg;base64,${newPfp}`;
             updateContextProfile({ profilePicture: newPfp });
@@ -87,8 +85,7 @@ const MyProfile = () => {
 
     const handleDeletePicture = async () => {
         try {
-            await axios.delete('/api/users/me/profile-picture', {
-                headers: { Authorization: `Bearer ${token}` }
+            await api.delete('/api/users/me/profile-picture', {
             });
             updateContextProfile({ profilePicture: null });
             toast.success("Profile picture removed");
@@ -109,9 +106,7 @@ const MyProfile = () => {
             if (!formData.password) delete payload.password;
             delete payload.confirmPassword;
 
-            const response = await axios.put('/api/users/me/update', payload, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await api.put('/api/users/me/update', payload);
             setProfile(response.data);
             setIsEditing(false);
             setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
@@ -189,11 +184,11 @@ const MyProfile = () => {
                 {!isEditing ? (
                     <div className="profile-details-view">
                         <div className="detail-box">
-                            <span className="detail-label">First Registry Name</span>
+                            <span className="detail-label">First Name</span>
                             <span className="detail-value">{profile.firstName || 'Not Documented'}</span>
                         </div>
                         <div className="detail-box">
-                            <span className="detail-label">Last Registry Name</span>
+                            <span className="detail-label">Last Name</span>
                             <span className="detail-value">{profile.lastName || 'Not Documented'}</span>
                         </div>
                         <div className="detail-box">
@@ -201,7 +196,7 @@ const MyProfile = () => {
                             <span className="detail-value">{profile.mobileNumber || 'No verified number'}</span>
                         </div>
                         <div className="detail-box">
-                            <span className="detail-label">Registry Address</span>
+                            <span className="detail-label">Address</span>
                             <span className="detail-value">{profile.address || 'No physical address linked'}</span>
                         </div>
                     </div>

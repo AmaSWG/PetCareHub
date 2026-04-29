@@ -8,6 +8,7 @@ import { useAuth } from '../../auth/contexts/AuthContext';
 import AddFeedbackForm from '../../feedback/components/AddFeedbackForm';
 import StarIcon from '@mui/icons-material/Star';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { getImageUrl } from '../../../api/imageUtils';
 
 const ProductDetail = ({ product: initialProduct, onClose, onAddToCart }) => {
   const [product, setProduct] = useState(initialProduct);
@@ -72,7 +73,7 @@ const ProductDetail = ({ product: initialProduct, onClose, onAddToCart }) => {
           <div className="product-detail-img-col">
             {product.imageUrl ? (
               <img
-                src={product.imageUrl}
+                src={getImageUrl(product.imageUrl)}
                 alt={product.name}
                 className="product-detail-img"
                 onError={(e) => {

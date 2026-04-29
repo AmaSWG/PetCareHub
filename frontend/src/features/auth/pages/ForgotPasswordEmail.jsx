@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { toast } from 'react-toastify';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordResetLayout from '../components/PasswordResetLayout';
@@ -18,7 +18,7 @@ const ForgotPasswordEmail = () => {
 
     setIsLoading(true);
     try {
-      await axios.post('/api/auth/forgot-password', { email });
+      await api.post('/api/auth/forgot-password', { email });
       toast.success('OTP sent');
       navigate('/verify-otp', { state: { email } });
     } catch (err) {

@@ -1,21 +1,10 @@
 import api from '../api/axios';
+import { getImageUrl } from '../api/imageUtils';
 
 /**
  * Robust helper to build pet image URLs.
  */
-export const getImageUrl = (path) => {
-    if (!path) return null;
-    if (path.startsWith('http')) return path;
-    
-    let normalizedPath = path.replace(/^[\\\/]+/, '').replace(/\\/g, '/');
-    
-    if (!normalizedPath.startsWith('uploads/') && !normalizedPath.startsWith('api/')) {
-        normalizedPath = `uploads/${normalizedPath}`;
-    }
-    
-    const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-    return BASE_URL ? `${BASE_URL}/${normalizedPath}` : `/${normalizedPath}`;
-};
+export { getImageUrl };
 
 const API_BASE = '/api/pets';
 

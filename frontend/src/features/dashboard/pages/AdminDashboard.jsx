@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import DashboardLayout from '../components/DashboardLayout';
 import { getAllPets } from '../../../services/petService';

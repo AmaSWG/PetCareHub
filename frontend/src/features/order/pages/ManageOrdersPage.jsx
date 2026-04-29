@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import OrderDetailsCard from '../components/OrderDetailsModal';
 import '../Order.css';
@@ -14,9 +14,7 @@ const ManageOrdersPage = () => {
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('/api/shop/orders/all', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/api/orders');
             setOrders(res.data || []);
         } catch (error) {
             console.error("Error fetching orders:", error);
@@ -31,8 +29,8 @@ const ManageOrdersPage = () => {
 
     const handleStatusChange = async (orderId, newStatus) => {
         try {
-            await axios.put(`/api/shop/orders/${orderId}/status`, { status: newStatus }, {
-                headers: { Authorization: `Bearer ${token}` }
+            await api.put(`/api/orders/${orderId}/status`, null, {
+                params: { status: newStatus }
             });
             showToast("Status updated successfully.");
             fetchOrders();

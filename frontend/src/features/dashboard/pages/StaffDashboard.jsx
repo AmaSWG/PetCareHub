@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import DashboardLayout from '../components/DashboardLayout';
-import { API_BASE_URL } from '../../../services/petService';
 
 import StaffAllPets from '../../pet/components/staff/StaffAllPets';
 import StaffAllAppointments from '../../appointment/pages/StaffAllAppointments';

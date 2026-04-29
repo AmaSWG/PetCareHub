@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../../styles/DoctorChanneling.css';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { getPetsByOwner } from '../../../services/petService';
 import { getAllVets } from '../../../services/vetService';
 import { getSlotsByVet } from '../../../services/timeSlotService';
@@ -150,7 +150,7 @@ const DoctorChanneling = () => {
 
     // Include vetId so we only get booked slots for the selected vet
     const vetParam = selectedVetId ? `&vetId=${selectedVetId}` : '';
-    axios
+    api
       .get(`/api/appointments/booked-slots?date=${selectedDate}${vetParam}`)
       .then((res) => setBookedSlots(res.data || []))
       .catch((err) => console.error('Failed to load booked slots:', err));
@@ -300,7 +300,7 @@ const DoctorChanneling = () => {
         price: Number(priceSummary),
       };
 
-      const apptRes = await axios.post('/api/appointments', appointmentData);
+      const apptRes = await api.post('/api/appointments', appointmentData);
       createdId = apptRes.data?.id;
 
       if (!createdId) {
@@ -323,7 +323,7 @@ const DoctorChanneling = () => {
       // If appointment was created but checkout session failed, delete it
       if (createdId) {
         try {
-          await axios.delete(`/api/appointments/${createdId}`);
+          await api.delete(`/api/appointments/${createdId}`);
         } catch (e) {
           console.error("Failed to delete orphaned appointment", e);
         }

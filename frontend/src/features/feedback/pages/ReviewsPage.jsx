@@ -15,10 +15,10 @@ const ReviewsPage = () => {
     const [loading, setLoading] = useState(true);
     const [showAddForm, setShowAddForm] = useState(false);
     const [selectedReview, setSelectedReview] = useState(null);
-    const { token, user } = useAuth();
+    const { token, user, hasRole } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    
+
     const userId = user?.userId ? Number(user.userId) : (localStorage.getItem('userId') ? Number(localStorage.getItem('userId')) : null);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const ReviewsPage = () => {
                 </div>
 
                 <div className="reviews-topbar-actions">
-                    <button 
+                    <button
                         className="reviews-home-btn"
                         title="Go Home"
                         onClick={() => navigate('/')}
@@ -83,9 +83,9 @@ const ReviewsPage = () => {
                 <div className="reviews-header-section">
                     <h1>What Our Clients Say</h1>
                     <p>Read honest reviews from our community of pet owners.</p>
-                    
-                    {token && (
-                        <button 
+
+                    {token && hasRole('OWNER') && (
+                        <button
                             className="btn btn-teal add-review-btn"
                             onClick={() => setShowAddForm(true)}
                         >
@@ -135,23 +135,23 @@ const ReviewsPage = () => {
                                             </div>
                                         )}
                                         <p className="review-comment-public">"{review.comment}"</p>
-                                        
+
                                         {review.comment && review.comment.length > 150 && (
-                                            <button 
-                                                className="read-more-link" 
+                                            <button
+                                                className="read-more-link"
                                                 onClick={() => setSelectedReview(review)}
                                             >
                                                 Read More...
                                             </button>
                                         )}
-                                        
+
                                         <div className="mt-2">
                                             {review.feedbackType === "PRODUCT" && (
                                                 <div className="review-context-public">
                                                     Reviewed: <strong>{review.productName || 'Product'}</strong>
                                                 </div>
                                             )}
-                                            
+
                                             {review.feedbackType === "APPOINTMENT" && (
                                                 <div className="review-context-public">
                                                     Service: <strong>{review.appointmentType}</strong>
@@ -176,7 +176,7 @@ const ReviewsPage = () => {
             </div>
 
             {showAddForm && (
-                <AddFeedbackForm 
+                <AddFeedbackForm
                     onClose={() => setShowAddForm(false)}
                     onSubmitSuccess={fetchFeedbacks}
                     ownerId={userId}
@@ -186,9 +186,9 @@ const ReviewsPage = () => {
             )}
 
             {selectedReview && (
-                <FeedbackDetailModal 
-                    feedback={selectedReview} 
-                    onClose={() => setSelectedReview(null)} 
+                <FeedbackDetailModal
+                    feedback={selectedReview}
+                    onClose={() => setSelectedReview(null)}
                 />
             )}
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api/axios';
 import { useAuth } from '../../auth/contexts/AuthContext';
 import ProductFormCard from '../components/ProductFormCard';
 import './PetStore.css';
@@ -15,7 +15,7 @@ const ManageShopPage = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('/api/products');
+            const res = await api.get('/api/products');
             setProducts(res.data || []);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -28,9 +28,7 @@ const ManageShopPage = () => {
         if (!window.confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
 
         try {
-            await axios.delete(`/api/products/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.delete(`/api/products/${id}`);
             showToast(`Product "${name}" deleted successfully.`);
             fetchProducts();
         } catch (error) {
