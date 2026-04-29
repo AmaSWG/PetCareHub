@@ -32,5 +32,6 @@ public class OrderDTO {
     private LocalDateTime updatedAt;
     private String cancellationReason;
     private String cancelledBy;
+    private String paymentReceiptFileName;
     private List<OrderItemDTO> orderItems;
 }

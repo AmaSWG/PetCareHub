@@ -95,6 +95,7 @@ public class OrderController {
                 .paymentMethod(order.getPaymentMethod() != null ? order.getPaymentMethod().name() : null)
                 .createdAt(order.getCreatedAt())
                 .updatedAt(order.getUpdatedAt())
+                .paymentReceiptFileName(order.getPaymentReceiptFileName())
                 .orderItems(order.getItems().stream().map(item -> OrderItemDTO.builder()
                         .orderItemId(item.getOrderItemId())
                         .productId(item.getProduct() != null ? item.getProduct().getProductId() : null)
