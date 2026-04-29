@@ -367,14 +367,9 @@ const MyAppointments = () => {
     }, 2000);
   };
 
+
   return (
     <div className="appointments-container">
-          <div className="vet-appointments-grid">
-            {appointments
-              .filter(a => (a.paymentStatus || "").toUpperCase() === "PAID" || a.paid === true || a.status === "UPCOMING")
-              .map((a) => (
-              <div key={a.id} className="vet-appointment-item" style={a.status === 'UPCOMING' && calculateOverdue(a.date) > 0 ? { border: '2px solid #dc2626' } : {}}>     </button>
-      </div>
 
       <div className="search-wrapper">
         <input
