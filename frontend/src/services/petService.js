@@ -5,25 +5,70 @@ import { getImageUrl } from '../api/imageUtils';
 export { getImageUrl };
 
 export const getAllPets = async () => {
-  const response = await api.get('/api/pets');
-  return response.data;
+  const response = await api.get('/api/pets/all');
+  return response.data.data; // Return the 'data' field from ApiResponse
 };
 
-export const getPetById = async (id) => {
-  const response = await api.get(`/api/pets/${id}`);
-  return response.data;
+export const getPetsByOwner = async (ownerId) => {
+  const response = await api.get(`/api/pets?ownerId=${ownerId}`);
+  return response.data.data;
 };
 
-export const addPet = async (petData) => {
-  const response = await api.post('/api/pets', petData);
-  return response.data;
+export const getPetById = async (petId, ownerId) => {
+  const response = await api.get(`/api/pets/${petId}?ownerId=${ownerId}`);
+  return response.data.data;
 };
 
-export const updatePet = async (id, petData) => {
-  const response = await api.put(`/api/pets/${id}`, petData);
-  return response.data;
+export const searchPetsByOwner = async (ownerId, name) => {
+  const response = await api.get(`/api/pets/search?ownerId=${ownerId}&name=${name}`);
+  return response.data.data;
 };
 
-export const deletePet = async (id) => {
-  await api.delete(`/api/pets/${id}`);
+export const registerPet = async (ownerId, petData, imageFile) => {
+  const formData = new FormData();
+  formData.append('ownerId', ownerId);
+  
+  // Append PetRequestDTO fields
+  Object.keys(petData).forEach(key => {
+    if (petData[key] !== null && petData[key] !== undefined) {
+      formData.append(key, petData[key]);
+    }
+  });
+
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
+
+  const response = await api.post('/api/pets', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data.data;
 };
+
+export const updatePet = async (petId, ownerId, petData, imageFile) => {
+  const formData = new FormData();
+  formData.append('ownerId', ownerId);
+
+  Object.keys(petData).forEach(key => {
+    if (petData[key] !== null && petData[key] !== undefined) {
+      formData.append(key, petData[key]);
+    }
+  });
+
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
+
+  const response = await api.put(`/api/pets/${petId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data.data;
+};
+
+// Alias for components using old names
+export const addPet = registerPet;
+export const searchPets = searchPetsByOwner;
