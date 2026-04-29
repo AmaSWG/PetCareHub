@@ -5,6 +5,7 @@ import '../../components/Dashboard.css';
 import './ManageStaff.css';
 import api from '../../../../api/axios';
 import { toast } from 'react-toastify';
+import { API_BASE_URL } from '../../../../services/petService';
 
 const ManageStaff = () => {
     const { loading, token } = useAuth();
@@ -26,9 +27,11 @@ const ManageStaff = () => {
     const fetchUsers = async () => {
         setIsFetching(true);
         try {
-            const response = await api.get('/api/users/staff');
+            const response = await api.get(`${API_BASE_URL}/api/admin/users`);
             const staffAndVets = response.data.filter(u =>
-                u.roles.includes('ROLE_VET') || u.roles.includes('ROLE_STAFF') || u.roles.includes('ROLE_ADMIN')
+                u.roles.includes('ROLE_VET') || u.roles.includes('VET') ||
+                u.roles.includes('ROLE_STAFF') || u.roles.includes('STAFF') ||
+                u.roles.includes('ROLE_ADMIN') || u.roles.includes('ADMIN')
             );
             setUsers(staffAndVets);
         } catch (error) {
@@ -63,7 +66,7 @@ const ManageStaff = () => {
                 enabled: true
             };
 
-            await api.post('/api/admin/create-vet-staff', payload);
+            await api.post(`${API_BASE_URL}/api/admin/users`, payload);
 
             toast.success(`${formData.role} created successfully!`);
             setShowModal(false);
