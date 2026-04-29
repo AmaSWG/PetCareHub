@@ -69,6 +69,8 @@ const StaffAllAppointments = () => {
     if (value === 'cancelled') return 'cancelled';
     if (value === 'completed') return 'completed';
     if (value === 'updated') return 'updated';
+    if (value === 'awaiting_payment') return 'pending';
+    if (value === 'expired') return 'cancelled';
     return 'default';
   };
 
@@ -111,10 +113,12 @@ const StaffAllAppointments = () => {
         >
           <option value="ALL">All Session Statuses</option>
           <option value="UPCOMING">Upcoming</option>
+          <option value="AWAITING_PAYMENT">Awaiting Payment</option>
           <option value="PENDING">Pending Approval</option>
           <option value="CONFIRMED">Confirmed</option>
           <option value="UPDATED">Rescheduled</option>
           <option value="CANCELLED">Terminated</option>
+          <option value="EXPIRED">Expired</option>
           <option value="COMPLETED">Archived</option>
         </select>
       </div>

@@ -202,16 +202,23 @@ const MyAppointments = () => {
   const upcomingAppointments = useMemo(
     () => filteredAppointments.filter((a) => {
       const s = (a.status || "").toUpperCase();
-      return s === "UPCOMING" || s === "OVERDUE" || s === "PENDING";
+      const p = (a.paymentStatus || "").toUpperCase();
+      const isPaid = a.paid === true || p === "PAID";
+      // Only show paid appointments that are active
+      return isPaid && (s === "UPCOMING" || s === "OVERDUE" || s === "PENDING");
     }),
     [filteredAppointments]
   );
 
   const pastAppointments = useMemo(
     () =>
-      filteredAppointments.filter((a) =>
-        ["PAST", "CANCELLED", "COMPLETED"].includes((a.status || "").toUpperCase())
-      ),
+      filteredAppointments.filter((a) => {
+        const s = (a.status || "").toUpperCase();
+        const p = (a.paymentStatus || "").toUpperCase();
+        const isPaid = a.paid === true || p === "PAID";
+        // Only show paid appointments in history
+        return isPaid && ["PAST", "CANCELLED", "COMPLETED"].includes(s);
+      }),
     [filteredAppointments]
   );
 
@@ -242,7 +249,7 @@ const MyAppointments = () => {
     e.preventDefault();
     setUpdateError("");
     try {
-      const res = await axios.put(`/api/appointments/${selectedAppointment.id}`, {
+      const res = await api.put(`/api/appointments/${selectedAppointment.id}`, {
         ...updateForm,
         userId,
         timeSlot: updateForm.time,
@@ -258,7 +265,7 @@ const MyAppointments = () => {
   const confirmCancel = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.patch(`/api/appointments/${cancelForm.appointmentId}/cancel`, {
+      const res = await api.patch(`/api/appointments/${cancelForm.appointmentId}/cancel`, {
         reason: cancelForm.reason,
       });
       setAppointments((prev) =>
@@ -362,11 +369,11 @@ const MyAppointments = () => {
 
   return (
     <div className="appointments-container">
-      <div className="appointments-header">
-        <h1>My Appointments</h1>
-        <button className="btn btn-teal" onClick={() => setShowCancelModal(true)}>
-          Cancel Appointments
-        </button>
+          <div className="vet-appointments-grid">
+            {appointments
+              .filter(a => (a.paymentStatus || "").toUpperCase() === "PAID" || a.paid === true || a.status === "UPCOMING")
+              .map((a) => (
+              <div key={a.id} className="vet-appointment-item" style={a.status === 'UPCOMING' && calculateOverdue(a.date) > 0 ? { border: '2px solid #dc2626' } : {}}>     </button>
       </div>
 
       <div className="search-wrapper">
